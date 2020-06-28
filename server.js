@@ -17,13 +17,10 @@ const port = process.env.PORT || 4000;
 //importar rutas
 app.use("/api/users", require("./routes/users"));
 app.use("/api/auth", require("./routes/auth"));
-app.use("/api/projects", require("./routes/projects"));
+app.use("/api/works", require("./routes/works"));
 app.use("/api/tasks", require("./routes/tasks"));
+app.use("/api/clients", require("./routes/clients"));
 
-//DEFinir pag principal
-app.get("/", (req, res) => {
-  res.send("HOLA MUNDO");
-});
 
 //arrancar servidior
 app.listen(port, '0.0.0.0', () => {

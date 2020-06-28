@@ -10,10 +10,7 @@ router.post(
   "/",
   auth,
   [
-    check("name", "You must add a name")
-      .not()
-      .isEmpty(),
-    check("name", "You must add a project")
+    check("taskName", "You must add a name")
       .not()
       .isEmpty()
   ],
@@ -21,17 +18,11 @@ router.post(
 );
 
 //obtener tareas por proyecto
-router.get("/",
- auth, 
- tasksController.getTasks);
+router.get("/", auth, tasksController.getTasks);
 
- //actualizar tares
- router.put('/:id',
- auth,
- tasksController.updateTask)
+//actualizar tares
+router.put("/:id", auth, tasksController.updateTask);
 
- router.delete('/:id',
- auth,
- tasksController.deleteTask)
+router.delete("/:id", auth, tasksController.deleteTask);
 
 module.exports = router;
