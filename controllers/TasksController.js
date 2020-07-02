@@ -5,6 +5,7 @@ const { validationResult } = require("express-validator");
 
 //crea una tarea
 exports.createTask = async (req, res) => {
+  console.log(req.body)
   //revisar si hay errores
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -12,6 +13,7 @@ exports.createTask = async (req, res) => {
   }
   //extraer el tranajo y comprobar si existe
   const { work } = req.body;
+  console.log(req.body)
   try {
     const currentWork = await Work.findById(work);
     if (!currentWork) {
@@ -22,9 +24,15 @@ exports.createTask = async (req, res) => {
     //   return res.status(401).json({ msg: "no authorization" });
     // }
     //creamos tara
-    const task = new Task(req.body);
-    await task.save();
-    res.json({ task });
+    if (req.body.length > 1) {
+      await Task.insertMany(req.body);
+    } else {
+      const toObject = Object.assign({}, ...req.body)
+      console.log(toObject)
+      const task = new Task(toObject);
+      await task.save();
+      res.json({ task });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).send({ msg: "server error" });
@@ -32,13 +40,14 @@ exports.createTask = async (req, res) => {
 };
 //obtiene tareas por proyectos
 exports.getTasks = async (req, res) => {
-  console.log(req.query)
+  console.log(req.query);
   //extraemos el proyecto
   try {
     const { work } = req.query;
     const currentWork = await Work.findById(work);
-    
-    const currentClient = await Client.findById(currentWork.cliente)
+
+    const currentClient = await Client.findById(currentWork.cliente);
+    console.log(currentClient);
     if (!currentWork) {
       res.status(404).json({ msg: "work not found" });
     }
@@ -48,7 +57,7 @@ exports.getTasks = async (req, res) => {
     // }
     // obtener tareas por proyectos
     const tasks = await Task.find({ work }).sort({ creator: -1 });
-    console.log(tasks)
+    console.log(tasks);
     res.json({ tasks, currentClient });
   } catch (error) {
     console.log(error);

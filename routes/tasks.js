@@ -8,12 +8,12 @@ const { check } = require("express-validator");
 //api/task
 router.post(
   "/",
-  auth,
-  [
-    check("taskName", "You must add a name")
-      .not()
-      .isEmpty()
-  ],
+  // auth,
+  // [
+  //   check("taskName", "You must add a name")
+  //     .not()
+  //     .isEmpty()
+  // ],
   tasksController.createTask
 );
 
