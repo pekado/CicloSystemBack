@@ -20,6 +20,7 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/works", require("./routes/works"));
 app.use("/api/tasks", require("./routes/tasks"));
 app.use("/api/clients", require("./routes/clients"));
+app.use("/api/email", require("./routes/email"));
 
 
 //arrancar servidior
