@@ -4,10 +4,11 @@ require('dotenv').config({ path: 'variables.env' });
 exports.sendEmail = function(req, res) {
   // Definimos el transporter
   var transporter = nodemailer.createTransport({
-    service: "Gmail",
+    host: "smtp.mailtrap.io",
+    port: 2525,
     auth: {
-      user: "peka.salas@gmail.com",
-      pass: process.env.EMAILPASS
+      user: "bc31455f0b58e6",
+      pass: "9be4afda479590"
     }
   });
   // Definimos el email

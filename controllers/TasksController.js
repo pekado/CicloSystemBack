@@ -26,6 +26,10 @@ exports.createTask = async (req, res) => {
       await Task.insertMany(req.body);
       // res.json(req.body)
     } else {
+      if(typeof req.body === "object"){
+        const task = new Task(req.body);
+        await task.save();
+      }
       const toObject = Object.assign({}, ...req.body)
       const task = new Task(toObject);
       await task.save();
