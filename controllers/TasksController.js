@@ -5,6 +5,7 @@ const { validationResult } = require("express-validator");
 
 //crea una tarea
 exports.createTask = async (req, res) => {
+  console.log(req.body)
   //revisar si hay errores
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -17,24 +18,9 @@ exports.createTask = async (req, res) => {
     if (!currentWork) {
       res.status(404).json({ msg: "Work not found" });
     }
-    // //revisar si el tranajo es del usuario
-    // if (currentWork.creator.toString() !== req.user.id) {
-    //   return res.status(401).json({ msg: "no authorization" });
-    // }
-    //creamos tara
-    if (req.body.length > 1) {
+  
       await Task.insertMany(req.body);
-      // res.json(req.body)
-    } else {
-      if(typeof req.body === "object"){
-        const task = new Task(req.body);
-        await task.save();
-      }
-      const toObject = Object.assign({}, ...req.body)
-      const task = new Task(toObject);
-      await task.save();
-      // res.json({ task });
-    }
+ 
   } catch (error) {
     console.log(error);
     res.status(500).send({ msg: "server error" });

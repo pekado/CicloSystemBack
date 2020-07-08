@@ -8,11 +8,12 @@ const WorkSchema = mongoose.Schema({
     },
     date:{
         type: Date,
-        default: moment().format('LL')
+        default: () => moment().format("L")
     },
     entregaDia:{
         type: Date,
-        required: true
+        required: true,
+        default: () => moment().format('L') 
     },
     entregaHora:{
         type: String,
