@@ -25,7 +25,7 @@ exports.sendEmail = function(req, res) {
       res.status(500, error.message);
     } else {
       console.log("Email sent");
-      res.status(200).jsonp(req.body);
+      res.status(200).json(req.body);
     }
   });
 };

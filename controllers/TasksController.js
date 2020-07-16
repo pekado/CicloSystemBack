@@ -5,7 +5,6 @@ const { validationResult } = require("express-validator");
 
 //crea una tarea
 exports.createTask = async (req, res) => {
-  console.log(req.body)
   //revisar si hay errores
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -18,9 +17,7 @@ exports.createTask = async (req, res) => {
     if (!currentWork) {
       res.status(404).json({ msg: "Work not found" });
     }
-  
       await Task.insertMany(req.body);
- 
   } catch (error) {
     console.log(error);
     res.status(500).send({ msg: "server error" });
@@ -60,11 +57,6 @@ exports.updateTask = async (req, res) => {
     if (!currentTask) {
       return res.status(404).json({ msg: "task doesn´t exist" });
     }
-    const currentWork = await Work.findById(work);
-    // //revisar si el tranajo es del usuario
-    // if (currentWork.creator.toString() !== req.user.id) {
-    //   return res.status(401).json({ msg: "no authorization" });
-    // }
     //crear objeto con nueva info
     const newTask = {};
     newTask.name = name;
@@ -84,19 +76,12 @@ exports.updateTask = async (req, res) => {
 //elimina tarea
 exports.deleteTask = async (req, res) => {
   try {
-    const { work } = req.query;
     //si la tarea existe
 
     let currentTask = await Task.findById(req.params.id);
     if (!currentTask) {
       return res.status(404).json({ msg: "task doesn´t exist" });
     }
-    // const currentWork = await Work.findById(Work);
-
-    // // //revisar si el tranajo es del usuario
-    // // if (currentWork.creator.toString() !== req.user.id) {
-    // //   return res.status(401).json({ msg: "no authorization" });
-    // // }
     //eliminar
     await Task.findByIdAndRemove({ _id: req.params.id });
     res.json({ msg: "deleted task" });

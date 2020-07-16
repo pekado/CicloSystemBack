@@ -35,7 +35,7 @@ exports.getWorks = async (req, res) => {
         }
       },
       { $unwind: "$Client" }
-    ]);
+    ]).sort({"entrega": 1 });
     res.json({ workAndClient });
   } catch (error) {
     console.log(error);

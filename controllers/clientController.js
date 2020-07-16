@@ -1,7 +1,7 @@
 const Client = require("../models/Clients");
 const { validationResult } = require("express-validator");
 
-exports.createClient = async (req, res) => {
+exports.createClient = (req, res) => {
   //revisar si hay errores
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
